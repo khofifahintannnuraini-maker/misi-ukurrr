@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misi Ukur Bersama Si Kiko | Matematika Kelas 4 SD</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header / Navbar Top -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="logo-brand" onclick="navigateTo('dashboard')">
+                <span class="logo-icon">🕵️‍♂️🐱</span>
+                <span class="logo-text">Misi Ukur <small>Si Kiko</small></span>
+            </div>
+            <div class="user-badge" id="headerUserBadge" style="display: none;">
+                <span id="userAvatarHeader">🐱</span>
+                <span id="userNameHeader">Detektif Cilik</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container Single Page Application -->
+    <main class="main-content">
+
+        <!-- HALAMAN A: WELCOME / LOGIN SCREEN -->
+        <section id="sec-login" class="spa-section active">
+            <div class="welcome-card">
+                <div class="mascot-avatar">🐱🕵️‍♂️</div>
+                <h1>Halo, Detektif Cilik!</h1>
+                <p>Bantu <strong>Si Kiko</strong> menyelesaikan Misi Pengukuran Panjang dan Berat!</p>
+                
+                <form id="formLogin" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="inputNama">Nama Lengkap Kamu:</label>
+                        <input type="text" id="inputNama" placeholder="Ketik namamu di sini..." required autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="selectKelas">Pilih Kelas:</label>
+                        <select id="selectKelas">
+                            <option value="4A">Kelas 4A SD/MI</option>
+                            <option value="4B">Kelas 4B SD/MI</option>
+                            <option value="4C">Kelas 4C SD/MI</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Pilih Avatar Karakter:</label>
+                        <div class="avatar-selector">
+                            <label><input type="radio" name="avatar" value="🐱" checked> <span>🐱</span></label>
+                            <label><input type="radio" name="avatar" value="🐶"> <span>🐶</span></label>
+                            <label><input type="radio" name="avatar" value="🦊"> <span>🦊</span></label>
+                            <label><input type="radio" name="avatar" value="Panda"> <span>🐼</span></label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-3d btn-primary">Mulai Petualangan! 🚀</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- HALAMAN B: DASHBOARD -->
+        <section id="sec-dashboard" class="spa-section">
+            <div class="dashboard-banner">
+                <div class="greeting">
+                    <h2>Halo, <span id="dashUserName">Detektif</span>! <span id="dashUserAvatar">🐱</span></h2>
+                    <p>Si Kiko siap menemanimu belajar hari ini. Pilih menu di bawah ini ya!</p>
+                </div>
+                <div class="progress-box">
+                    <span>Progress Kuis:</span>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="dashProgressFill" style="width: 0%;"></div>
+                    </div>
+                    <small id="dashProgressText">Belum ada nilai kuis</small>
+                </div>
+            </div>
+
+            <div class="menu-grid">
+                <div class="menu-card" onclick="navigateTo('materi')">
+                    <div class="menu-icon">📚</div>
+                    <h3>Modul Materi</h3>
+                    <p>Pelajari Pengukuran Panjang & Berat</p>
+                </div>
+                <div class="menu-card" onclick="navigateTo('aktivitas')">
+                    <div class="menu-icon">🎮</div>
+                    <h3>Aktivitas Belajar</h3>
+                    <p>5 Mini Game Interaktif Seru</p>
+                </div>
+                <div class="menu-card" onclick="navigateTo('kuis')">
+                    <div class="menu-icon">📝</div>
+                    <h3>Kuis Evaluasi</h3>
+                    <p>Uji Kemampuanmu (10 Soal HOTS)</p>
+                </div>
+                <div class="menu-card" onclick="navigateTo('rapor')">
+                    <div class="menu-icon">🏆</div>
+                    <h3>Rapor & Badges</h3>
+                    <p>Lihat Nilai & Lencana Prestasimu</p>
+                </div>
+                <div class="menu-card" onclick="navigateTo('petunjuk')">
+                    <div class="menu-icon">💡</div>
+                    <h3>Petunjuk Main</h3>
+                    <p>Cara menggunakan media ini</p>
+                </div>
+                <div class="menu-card" onclick="navigateTo('tentang')">
+                    <div class="menu-icon">ℹ️</div>
+                    <h3>Tentang Media</h3>
+                    <p>Pengembang & Kurikulum SD</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- HALAMAN C: MATERI (CARD TAB & MINI CHECK) -->
+        <section id="sec-materi" class="spa-section">
+            <div class="section-header">
+                <button class="btn-back" onclick="navigateTo('dashboard')">⬅️ Kembali</button>
+                <h2>📚 Modul Materi Pembelajaran</h2>
+            </div>
+
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="switchMateriTab('panjang')">📏 Pengukuran Panjang</button>
+                <button class="tab-btn" onclick="switchMateriTab('berat')">⚖️ Pengukuran Berat</button>
+                <button class="tab-btn" onclick="switchMateriTab('cerita')">📖 Soal Cerita</button>
+            </div>
+
+            <!-- TAB A: PANJANG -->
+            <div id="tab-panjang" class="tab-content active">
+                <!-- Sub 1: Alat Ukur Panjang -->
+                <div class="materi-card">
+                    <span class="materi-badge">Materi 1</span>
+                    <h3>Alat Ukur Panjang Baku</h3>
+                    <div class="grid-2col">
+                        <div class="materi-item">
+                            <div class="item-img">📏</div>
+                            <h4>Penggaris (cm & mm)</h4>
+                            <p>Untuk mengukur benda pendek & lurus.<br><em>Contoh: Pensil, buku, penghapus.</em></p>
+                        </div>
+                        <div class="materi-item">
+                            <div class="item-img">🛠️</div>
+                            <h4>Meteran Saku (m & cm)</h4>
+                            <p>Untuk mengukur bidang datar/lurus yang panjang.<br><em>Contoh: Meja, pintu, papan tulis.</em></p>
+                        </div>
+                        <div class="materi-item">
+                            <div class="item-img">🎗️</div>
+                            <h4>Meteran Kain / Pita (cm)</h4>
+                            <p>Fleksibel/lentur, untuk bidang melengkung.<br><em>Contoh: Lingkar pinggang, kain baju.</em></p>
+                        </div>
+                    </div>
+                    <!-- Mini Check -->
+                    <div class="mini-check">
+                        <strong>🔍 Mini Check Kiko:</strong>
+                        <p>Budi ingin mengukur lingkar dadanya untuk membuat seragam. Alat mana yang paling tepat?</p>
+                        <div class="mini-check-options">
+                            <button onclick="checkMini(this, false)">A. Penggaris</button>
+                            <button onclick="checkMini(this, true)">B. Meteran Kain</button>
+                        </div>
+                        <div class="mini-feedback"></div>
+                    </div>
+                </div>
+
+                <!-- Sub 2: Tangga Satuan Panjang -->
+                <div class="materi-card">
+                    <span class="materi-badge">Materi 2</span>
+                    <h3>Hubungan Antarsatuan Panjang (m & cm)</h3>
+                    <p>Ingat tangga satuan panjang: <strong>km - hm - dam - m - dm - cm - mm</strong></p>
+                    <div class="formula-box">
+                        <p>⬇️ Every step down = <strong>Multiply by 10 (x10)</strong></p>
+                        <p>⬆️ Every step up = <strong>Divide by 10 (:10)</strong></p>
+                        <hr>
+                        <h4>Fokus Utama Kelas IV:</h4>
+                        <p>🎯 <strong>1 Meter (m) = 100 Sentimeter (cm)</strong> (Turun 2 tangga: m ➔ dm ➔ cm)</p>
+                        <p>🎯 <strong>100 Sentimeter (cm) = 1 Meter (m)</strong></p>
+                    </div>
+                    <div class="example-box">
+                        <strong>Contoh Soal:</strong>
+                        <ul>
+                            <li>3 m = 3 x 100 cm = <strong>300 cm</strong></li>
+                            <li>500 cm = 500 : 100 = <strong>5 m</strong></li>
+                            <li>2 m 45 cm = 200 cm + 45 cm = <strong>245 cm</strong></li>
+                        </ul>
+                    </div>
+                    <div class="mini-check">
+                        <strong>🔍 Mini Check Kiko:</strong>
+                        <p>Tinggi tiang bendera adalah 4 m. Jika diubah ke sentimeter (cm), nilainya adalah...</p>
+                        <div class="mini-check-options">
+                            <button onclick="checkMini(this, false)">A. 40 cm</button>
+                            <button onclick="checkMini(this, true)">B. 400 cm</button>
+                        </div>
+                        <div class="mini-feedback"></div>
+                    </div>
+                </div>
+
+                <!-- Sub 3: Pembulatan Panjang -->
+                <div class="materi-card">
+                    <span class="materi-badge">Materi 3</span>
+                    <h3>Pembulatan Hasil Pengukuran Panjang</h3>
+                    <p>Pembulatan ke cm terdekat dilihat dari angka mm (di belakang koma):</p>
+                    <ul class="rule-list">
+                        <li>🔴 Jika angka &lt; 5 (0, 1, 2, 3, 4) ➔ <strong>Bulatkan ke BAWAH</strong> (angka cm tetap).</li>
+                        <li>🟢 Jika angka ≥ 5 (5, 6, 7, 8, 9) ➔ <strong>Bulatkan ke ATAS</strong> (cm + 1).</li>
+                    </ul>
+                    <div class="example-box">
+                        <p>✏️ Pensil 8,3 cm ➔ angka belakang koma 3 (&lt;5) ➔ dibulatkan jadi <strong>8 cm</strong>.</p>
+                        <p>🧹 Penghapus 4,7 cm ➔ angka belakang koma 7 (≥5) ➔ dibulatkan jadi <strong>5 cm</strong>.</p>
+                    </div>
+                    <div class="mini-check">
+                        <strong>🔍 Mini Check Kiko:</strong>
+                        <p>Panjang sebuah spidol adalah 12,6 cm. Pembulatan ke cm terdekat adalah...</p>
+                        <div class="mini-check-options">
+                            <button onclick="checkMini(this, false)">A. 12 cm</button>
+                            <button onclick="checkMini(this, true)">B. 13 cm</button>
+                        </div>
+                        <div class="mini-feedback"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB B: BERAT -->
+            <div id="tab-berat" class="tab-content">
+                <div class="materi-card">
+                    <span class="materi-badge">Materi 1</span>
+                    <h3>Alat Ukur Berat (Timbangan Baku)</h3>
+                    <div class="grid-2col">
+                        <div class="materi-item">
+                            <div class="item-img">⚖️</div>
+                            <h4>Timbangan Badan (kg)</h4>
+                            <p>Untuk mengukur berat badan manusia.</p>
+                        </div>
+                        <div class="materi-item">
+                            <div class="item-img">🦆</div>
+                            <h4>Timbangan Pasar / Bebek</h4>
+                            <p>Menggunakan anak timbangan untuk telur, buah, & sayur di pasar.</p>
+                        </div>
+                        <div class="materi-item">
+                            <div class="item-img">🔢</div>
+                            <h4>Timbangan Digital</h4>
+                            <p>Menampilkan angka desimal akurat di supermarket.</p>
+                        </div>
+                        <div class="materi-item">
+                            <div class="item-img">🎂</div>
+                            <h4>Timbangan Kue / Rumah Tangga</h4>
+                            <p>Kapasitas kecil (2-5 kg) untuk tepung, gula, mentega.</p>
+                        </div>
+                    </div>
+                    <div class="mini-check">
+                        <strong>🔍 Mini Check Kiko:</strong>
+                        <p>Ibu ingin menimbang 250 gram mentega untuk membuat kue. Timbangan apa yang paling praktis?</p>
+                        <div class="mini-check-options">
+                            <button onclick="checkMini(this, false)">A. Timbangan Badan</button>
+                            <button onclick="checkMini(this, true)">B. Timbangan Kue</button>
+                        </div>
+                        <div class="mini-feedback"></div>
+                    </div>
+                </div>
+
+                <div class="materi-card">
+                    <span class="materi-badge">Materi 2</span>
+                    <h3>Hubungan Satuan Berat (kg, g, Ons, Pon)</h3>
+                    <div class="formula-box">
+                        <p>📦 <strong>1 kilogram (kg) = 1.000 gram (g)</strong></p>
+                        <p>🍊 <strong>1 kilogram (kg) = 10 ons</strong> (1 ons = 1 hg = 100 gram)</p>
+                        <p>🥖 <strong>1 kilogram (kg) = 2 pon</strong> (1 pon = 500 gram)</p>
+                    </div>
+                    <div class="example-box">
+                        <ul>
+                            <li>2 kg = 2 x 1.000 g = <strong>2.000 g</strong></li>
+                            <li>3 kg 200 g = 3.000 g + 200 g = <strong>3.200 g</strong></li>
+                            <li>4 ons = 4 x 100 g = <strong>400 g</strong></li>
+                            <li>2 pon = 2 x 500 g = <strong>1.000 g = 1 kg</strong></li>
+                        </ul>
+                    </div>
+                    <div class="mini-check">
+                        <strong>🔍 Mini Check Kiko:</strong>
+                        <p>Ayah membeli 3 kg apel. Berapa gramkah berat apel tersebut?</p>
+                        <div class="mini-check-options">
+                            <button onclick="checkMini(this, false)">A. 300 g</button>
+                            <button onclick="checkMini(this, true)">B. 3.000 g</button>
+                        </div>
+                        <div class="mini-feedback"></div>
+                    </div>
+                </div>
+
+                <div class="materi-card">
+                    <span class="materi-badge">Materi 3</span>
+                    <h3>Pembulatan Hasil Pengukuran Berat</h3>
+                    <p>Aturan sama dengan pembulatan desimal biasa:</p>
+                    <div class="example-box">
+                        <p>🍉 Semangka 2,4 kg ➔ angka belakang koma 4 (&lt;5) ➔ dibulatkan jadi <strong>2 kg</strong>.</p>
+                        <p>🌾 Kantong Beras 4,8 kg ➔ angka belakang koma 8 (≥5) ➔ dibulatkan jadi <strong>5 kg</strong>.</p>
+                    </div>
+                    <div class="mini-check">
+                        <strong>🔍 Mini Check Kiko:</strong>
+                        <p>Penimbangan seekor ayam menunjukkan angka 1,5 kg. Pembulatan ke kg terdekat adalah...</p>
+                        <div class="mini-check-options">
+                            <button onclick="checkMini(this, false)">A. 1 kg</button>
+                            <button onclick="checkMini(this, true)">B. 2 kg</button>
+                        </div>
+                        <div class="mini-feedback"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB C: SOAL CERITA -->
+            <div id="tab-cerita" class="tab-content">
+                <div class="materi-card">
+                    <h3>💡 Strategi 3 Langkah Soal Cerita</h3>
+                    <div class="steps-container">
+                        <div class="step-card">
+                            <div class="step-num">1</div>
+                            <p><strong>Samakan Satuan</strong><br>Ubah semua ke satuan yang ditanyakan.</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-num">2</div>
+                            <p><strong>Operasi Hitung</strong><br>Lakukan penjumlahan (+) atau pengurangan (-).</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-num">3</div>
+                            <p><strong>Hasil Akhir</strong><br>Tuliskan jawaban lengkap beserta satuannya.</p>
+                        </div>
+                    </div>
+
+                    <div class="example-box highlighted">
+                        <h4>Contoh Kasus:</h4>
+                        <p><em>"Ibu membeli 2 kg gula pasir dan 700 gram tepung terigu. Berapa gram total belanjaan Ibu?"</em></p>
+                        <hr>
+                        <p><strong>Penyelesaian:</strong></p>
+                        <ol>
+                            <li>Ubah 2 kg ke gram ➔ 2 kg = 2.000 gram.</li>
+                            <li>Tepung terigu sudah dalam gram ➔ 700 gram.</li>
+                            <li>Jumlahkan: 2.000 g + 700 g = <strong>2.700 gram</strong>.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HALAMAN D: AKTIVITAS BELAJAR (5 MINI GAMES) -->
+        <section id="sec-aktivitas" class="spa-section">
+            <div class="section-header">
+                <button class="btn-back" onclick="navigateTo('dashboard')">⬅️ Kembali</button>
+                <h2>🎮 Aktivitas Belajar Interaktif</h2>
+            </div>
+
+            <div class="game-nav">
+                <button class="game-tab-btn active" onclick="loadGameModule(1)">Modul 1: Sortir Benda</button>
+                <button class="game-tab-btn" onclick="loadGameModule(2)">Modul 2: Jembatan Konversi</button>
+                <button class="game-tab-btn" onclick="loadGameModule(3)">Modul 3: Detektif Skala</button>
+                <button class="game-tab-btn" onclick="loadGameModule(4)">Modul 4: Kasir Cilik</button>
+                <button class="game-tab-btn" onclick="loadGameModule(5)">Modul 5: Ayo Berpikir!</button>
+            </div>
+
+            <!-- Game Container Dynamic -->
+            <div id="gameContainer" class="game-card-area">
+                <!-- Content injected via JS -->
+            </div>
+        </section>
+
+        <!-- HALAMAN E: KUIS EVALUASI -->
+        <section id="sec-kuis" class="spa-section">
+            <div class="section-header">
+                <button class="btn-back" onclick="navigateTo('dashboard')">⬅️ Kembali</button>
+                <h2>📝 Kuis Evaluasi Misi Ukur</h2>
+            </div>
+
+            <div class="quiz-box">
+                <div class="quiz-header">
+                    <span id="quizProgressText">Soal 1 dari 10</span>
+                    <div class="progress-bar-bg small">
+                        <div id="quizProgressBar" class="progress-bar-fill" style="width: 10%;"></div>
+                    </div>
+                </div>
+
+                <div id="quizBody">
+                    <h3 id="quizQuestion">Pertanyaan Kuis...</h3>
+                    <div id="quizOptions" class="quiz-options-grid">
+                        <!-- Dynamic Buttons -->
+                    </div>
+                </div>
+
+                <!-- Result Area (Hidden initially) -->
+                <div id="quizResultArea" style="display: none;" class="quiz-result-card">
+                    <div class="result-icon" id="resultIcon">🏆</div>
+                    <h2>Misi Selesai!</h2>
+                    <p>Skor Kamu: <strong id="resultScore" class="score-text">0</strong> / 100</p>
+                    <p id="resultBadgeText" class="badge-text"></p>
+                    <div class="result-actions">
+                        <button class="btn-3d btn-primary" onclick="showQuizReview()">🔍 Lihat Pembahasan Soal</button>
+                        <button class="btn-3d btn-secondary" onclick="restartQuiz()">🔄 Ulangi Kuis</button>
+                    </div>
+                </div>
+
+                <!-- Review Area -->
+                <div id="quizReviewArea" style="display: none;" class="review-card">
+                    <h3>🔍 Pembahasan Soal Evaluasi</h3>
+                    <div id="reviewList"></div>
+                    <button class="btn-3d btn-primary" onclick="navigateTo('rapor')">Lihat Rapor Belajar 🏆</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- HALAMAN F: RAPOR & BADGES -->
+        <section id="sec-rapor" class="spa-section">
+            <div class="section-header">
+                <button class="btn-back" onclick="navigateTo('dashboard')">⬅️ Kembali</button>
+                <h2>🏆 Rapor Belajar & Lencana</h2>
+            </div>
+
+            <div class="rapor-card">
+                <div class="student-profile">
+                    <span id="raporAvatar" class="big-avatar">🐱</span>
+                    <div>
+                        <h3 id="raporNama">Nama Siswa</h3>
+                        <p id="raporKelas">Kelas 4</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="rapor-stats">
+                    <div class="stat-item">
+                        <span>Skor Kuis Evaluasi</span>
+                        <h2 id="raporSkor">-</h2>
+                    </div>
+                    <div class="stat-item">
+                        <span>Status Kelulusan</span>
+                        <h3 id="raporStatus">-</h3>
+                    </div>
+                </div>
+                <hr>
+                <h3>🎖️ Lencana Pencapaian:</h3>
+                <div id="raporBadges" class="badges-container">
+                    <!-- Badges injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- HALAMAN G: PETUNJUK -->
+        <section id="sec-petunjuk" class="spa-section">
+            <div class="section-header">
+                <button class="btn-back" onclick="navigateTo('dashboard')">⬅️ Kembali</button>
+                <h2>💡 Petunjuk Penggunaan Media</h2>
+            </div>
+            <div class="info-card">
+                <ol class="guide-list">
+                    <li><strong>Mulai Misi:</strong> Masukkan nama, kelas, dan pilih avatar favoritmu pada layar utama.</li>
+                    <li><strong>Pelajari Materi:</strong> Buka menu Modul Materi untuk mempelajari Pengukuran Panjang, Berat, dan Soal Cerita. Cobalah Mini Check di setiap section!</li>
+                    <li><strong>Bermain Aktivitas:</strong> Selesaikan 5 Mini Games interaktif (Sortir Benda, Jembatan Konversi, Detektif Skala, Kasir Cilik, dan Ayo Berpikir!).</li>
+                    <li><strong>Kuis Evaluasi:</strong> Jawab 10 soal pilihan ganda untuk menguji kemampuanmu dan dapatkan skor hingga 100.</li>
+                    <li><strong>Cek Rapor:</strong> Lihat lencana kehormatan yang berhasil kamu raih pada menu Rapor & Badges!</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- HALAMAN H: TENTANG MEDIA -->
+        <section id="sec-tentang" class="spa-section">
+            <div class="section-header">
+                <button class="btn-back" onclick="navigateTo('dashboard')">⬅️ Kembali</button>
+                <h2>ℹ️ Tentang Media Pembelajaran</h2>
+            </div>
+            <div class="info-card">
+                <h3>Misi Ukur Bersama Si Kiko</h3>
+                <p>Media pembelajaran berbasis web interaktif ini dirancang khusus untuk memenuhi kebutuhan pembelajaran matematika SD/MI Kelas IV berdasarkan Kurikulum Merdeka.</p>
+                <br>
+                <p><strong>Pengembang:</strong> Senior Web Developer & UI/UX Specialist EdTech</p>
+                <p><strong>Materi:</strong> Pengukuran Panjang dan Berat (Kelas 4 SD/MI)</p>
+                <p><strong>Teknologi:</strong> HTML5, CSS3 Custom Animations, Vanilla JavaScript ES6, LocalStorage API.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Audio Modal / Feedback Popup -->
+    <div id="feedbackModal" class="modal-overlay">
+        <div class="modal-content">
+            <span id="modalIcon" class="modal-icon">⭐</span>
+            <h2 id="modalTitle">Luar Biasa!</h2>
+            <p id="modalMessage">Jawabanmu tepat sekali!</p>
+            <button class="btn-3d btn-primary" onclick="closeModal()">Lanjut 🚀</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
